@@ -12,7 +12,7 @@ Webanwendung zum Verwalten eines persönlichen Rezeptbuchs. Rezepte können inkl
 - Spring Boot
 - Thymeleaf (Server-Side Rendering)
 - Spring Data JPA (Persistenz)
-- H2 Database (**Disk-Persistenz**, nicht In-Memory)
+- H2 Database (**Persistenz**, nicht In-Memory)
 
 ## Datenmodell
 Es gibt mindestens zwei Tabellen (normalisiert):
@@ -26,5 +26,5 @@ Es gibt mindestens zwei Tabellen (normalisiert):
 - Start via `mvnw spring-boot:run`
 - App auf `http://localhost:8080`
 - H2 Console auf `http://localhost:8080/h2-console/`
-- Persistenz auf Disk
+- Persistenz auf Festplatte
 - 2 Entities mit vollständigem CRUD

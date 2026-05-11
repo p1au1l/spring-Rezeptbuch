@@ -1,33 +1,19 @@
-HELP.md
+# Maven Build-Artefakte
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.jar
+*.war
 
-### STS ###
-.apt_generated
+# IDE (lokal, nicht nötig)
 .classpath
-.factorypath
 .project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+.settings/
 *.iml
-*.ipr
+.idea/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Logs
+logs/
+*.log
 
-### VS Code ###
+# OS
+.DS_Store
 .vscode/

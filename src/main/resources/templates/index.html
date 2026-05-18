@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezeptbuch - Startseite</title>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: siteHeader('Rezeptbuch')}"></div>
+<p>Willkommen in Ihrer Rezeptverwaltung.</p>
+
+<h2>Übersicht</h2>
+<ul>
+    <li>Anzahl Kategorien: <strong th:text="${categoryCount}">0</strong></li>
+    <li>Anzahl Rezepte: <strong th:text="${recipeCount}">0</strong></li>
+</ul>
+
+</body>
+</html>
+

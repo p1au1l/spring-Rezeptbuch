@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="siteHeader(pageTitle)">
+    <p>
+        <a th:href="@{/}">Start</a>
+        |
+        <a th:href="@{/categories}">Kategorien</a>
+        |
+        <a th:href="@{/recipes}">Rezepte</a>
+    </p>
+    <h1 th:text="${pageTitle}">Seite</h1>
+</div>
+
+<div th:fragment="flashMessages(successMessage, errorMessage)">
+    <p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+</div>
+</body>
+</html>
+

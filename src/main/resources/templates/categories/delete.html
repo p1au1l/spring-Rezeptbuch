@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorie löschen</title>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: siteHeader('Kategorie löschen')}"></div>
+
+<p>Wirklich löschen?</p>
+<p>
+    Die Kategorie <strong th:text="${category.name}"></strong> (ID: <span th:text="${category.id}"></span>)
+    wird dauerhaft gelöscht.
+</p>
+
+<form th:action="@{/categories/{id}/delete(id=${category.id})}" method="post">
+    <button type="submit">Ja, endgültig löschen</button>
+    <a th:href="@{/categories/{id}(id=${category.id})}">Nein, abbrechen</a>
+</form>
+</body>
+</html>
+

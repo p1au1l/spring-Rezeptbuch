@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorie-Details</title>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: siteHeader('Kategorie-Details')}"></div>
+<div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
+
+<p><strong>ID:</strong> <span th:text="${category.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${category.name}"></span></p>
+<p><strong>Beschreibung:</strong> <span th:text="${category.description}"></span></p>
+
+<p>
+    <a th:href="@{/categories/{id}/edit(id=${category.id})}">Bearbeiten</a>
+    |
+    <a th:href="@{/categories/{id}/delete(id=${category.id})}">Löschen</a>
+    |
+    <a th:href="@{/categories}">Zurück zur Liste</a>
+</p>
+</body>
+</html>
+

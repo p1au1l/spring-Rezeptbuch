@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen'">Rezept</title>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: siteHeader(${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen')}"></div>
+
+<form th:object="${recipe}"
+      th:action="${isEdit} ? @{/recipes/{id}/edit(id=${recipe.id})} : @{/recipes/new}"
+      method="post">
+
+    <div>
+        <label for="title">Titel *</label><br>
+        <input type="text" id="title" th:field="*{title}">
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+    </div>
+
+    <div>
+        <label for="description">Beschreibung</label><br>
+        <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
+    </div>
+
+    <div>
+        <label for="sourceUrl">Quell-URL</label><br>
+        <input type="text" id="sourceUrl" th:field="*{sourceUrl}">
+    </div>
+
+    <div>
+        <label for="notes">Notizen</label><br>
+        <textarea id="notes" th:field="*{notes}" rows="4" cols="50"></textarea>
+    </div>
+
+    <div>
+        <label for="cookTimeMinutes">Kochzeit (Minuten)</label><br>
+        <input type="number" id="cookTimeMinutes" th:field="*{cookTimeMinutes}" min="0">
+    </div>
+
+    <div>
+        <label for="rating">Bewertung (1-5)</label><br>
+        <input type="number" id="rating" th:field="*{rating}" min="1" max="5">
+        <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" style="color: red;"></p>
+    </div>
+
+    <div>
+        <label for="category">Kategorie *</label><br>
+        <select id="category" th:field="*{category.id}">
+            <option value="">Bitte wählen</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red;"></p>
+        <p th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}" style="color: red;"></p>
+    </div>
+
+    <div style="margin-top: 12px;">
+        <button type="submit">Speichern</button>
+        <a th:href="${isEdit} ? @{/recipes/{id}(id=${recipe.id})} : @{/recipes}">Abbrechen</a>
+    </div>
+</form>
+</body>
+</html>
+

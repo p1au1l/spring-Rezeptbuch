@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezept-Details</title>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: siteHeader('Rezept-Details')}"></div>
+<div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
+
+<p><strong>ID:</strong> <span th:text="${recipe.id}"></span></p>
+<p><strong>Titel:</strong> <span th:text="${recipe.title}"></span></p>
+<p><strong>Beschreibung:</strong> <span th:text="${recipe.description}"></span></p>
+<p><strong>Quell-URL:</strong> <span th:text="${recipe.sourceUrl}"></span></p>
+<p><strong>Notizen:</strong> <span th:text="${recipe.notes}"></span></p>
+<p><strong>Kochzeit:</strong> <span th:text="${recipe.cookTimeMinutes}"></span> Minuten</p>
+<p><strong>Bewertung:</strong> <span th:text="${recipe.rating}"></span></p>
+<p><strong>Kategorie:</strong> <span th:text="${recipe.category.name}"></span></p>
+
+<p>
+    <a th:href="@{/recipes/{id}/edit(id=${recipe.id})}">Bearbeiten</a>
+    |
+    <a th:href="@{/recipes/{id}/delete(id=${recipe.id})}">Löschen</a>
+    |
+    <a th:href="@{/recipes}">Zurück zur Liste</a>
+</p>
+</body>
+</html>
+

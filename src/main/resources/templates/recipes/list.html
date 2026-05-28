@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Rezepte</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead('Rezepte')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader('Rezepte')}"></div>
-<div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader('Rezepte')}"></div>
+    <div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
 
-<p>
-    <a th:href="@{/recipes/new}">Neues Rezept anlegen</a>
-</p>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <p class="text-muted mb-0">Alle Rezepte an einem Ort – mit Kategorie und Bewertung.</p>
+        <a class="btn btn-success" th:href="@{/recipes/new}">Neues Rezept anlegen</a>
+    </div>
 
-<table border="1" cellpadding="6" cellspacing="0">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Titel</th>
-        <th>Kategorie</th>
-        <th>Bewertung</th>
-        <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(recipes)}">
-        <td colspan="5">Es sind noch keine Rezepte vorhanden.</td>
-    </tr>
-    <tr th:each="recipe : ${recipes}">
-        <td th:text="${recipe.id}"></td>
-        <td th:text="${recipe.title}"></td>
-        <td th:text="${recipe.category != null ? recipe.category.name : '-'}"></td>
-        <td th:text="${recipe.rating}"></td>
-        <td>
-            <a th:href="@{/recipes/{id}(id=${recipe.id})}">Details</a>
-            |
-            <a th:href="@{/recipes/{id}/edit(id=${recipe.id})}">Bearbeiten</a>
-            |
-            <a th:href="@{/recipes/{id}/delete(id=${recipe.id})}">Löschen</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titel</th>
+                    <th>Kategorie</th>
+                    <th>Bewertung</th>
+                    <th class="text-end">Aktionen</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(recipes)}">
+                    <td colspan="5" class="text-center text-muted py-5">Es sind noch keine Rezepte vorhanden.</td>
+                </tr>
+                <tr th:each="recipe : ${recipes}">
+                    <td th:text="${recipe.id}" class="fw-semibold"></td>
+                    <td>
+                        <div class="fw-semibold" th:text="${recipe.title}"></div>
+                    </td>
+                    <td>
+                        <span class="badge text-bg-light border" th:text="${recipe.category != null ? recipe.category.name : '-'}"></span>
+                    </td>
+                    <td>
+                        <span class="badge text-bg-success" th:text="${recipe.rating != null ? recipe.rating + '/5' : '—'}"></span>
+                    </td>
+                    <td class="text-end">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <a class="btn btn-outline-primary" th:href="@{/recipes/{id}(id=${recipe.id})}">Details</a>
+                            <a class="btn btn-outline-secondary" th:href="@{/recipes/{id}/edit(id=${recipe.id})}">Bearbeiten</a>
+                            <a class="btn btn-outline-danger" th:href="@{/recipes/{id}/delete(id=${recipe.id})}">Löschen</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

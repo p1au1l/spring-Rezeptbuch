@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Rezeptbuch - Startseite</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead('Rezeptbuch')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader('Rezeptbuch')}"></div>
-<p>Willkommen in Ihrer Rezeptverwaltung.</p>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader('Rezeptbuch')}"></div>
 
-<h2>Übersicht</h2>
-<ul>
-    <li>Anzahl Kategorien: <strong th:text="${categoryCount}">0</strong></li>
-    <li>Anzahl Rezepte: <strong th:text="${recipeCount}">0</strong></li>
-</ul>
+    <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4 p-md-5">
+                    <p class="text-uppercase text-success fw-semibold small mb-2">Willkommen zurück</p>
+                    <h2 class="fw-bold mb-3">Dein Rezeptbuch auf einen Blick</h2>
+                    <p class="text-muted mb-4">Verwalte Kategorien, Rezepte und deine Lieblingsideen an einem Ort – übersichtlich und schnell erreichbar.</p>
 
+                    <div class="d-flex flex-wrap gap-3">
+                        <a class="btn btn-success btn-lg" th:href="@{/recipes}">Rezepte ansehen</a>
+                        <a class="btn btn-outline-success btn-lg" th:href="@{/categories}">Kategorien verwalten</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+            <div class="row g-4">
+                <div class="col-6">
+                    <div class="card shadow-sm h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="details-label">Kategorien</div>
+                            <div class="display-5 fw-bold text-success" th:text="${categoryCount}">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card shadow-sm h-100 text-center">
+                        <div class="card-body py-4">
+                            <div class="details-label">Rezepte</div>
+                            <div class="display-5 fw-bold text-success" th:text="${recipeCount}">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h5 fw-semibold">Schnellzugriff</h3>
+                            <div class="list-group list-group-flush">
+                                <a class="list-group-item list-group-item-action px-0" th:href="@{/recipes/new}">+ Neues Rezept anlegen</a>
+                                <a class="list-group-item list-group-item-action px-0" th:href="@{/categories/new}">+ Neue Kategorie anlegen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

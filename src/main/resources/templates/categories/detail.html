@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Kategorie-Details</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead('Kategorie-Details')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader('Kategorie-Details')}"></div>
-<div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader('Kategorie-Details')}"></div>
+    <div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
 
-<p><strong>ID:</strong> <span th:text="${category.id}"></span></p>
-<p><strong>Name:</strong> <span th:text="${category.name}"></span></p>
-<p><strong>Beschreibung:</strong> <span th:text="${category.description}"></span></p>
+    <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+            <div class="row g-4">
+                <div class="col-12 col-lg-8">
+                    <div class="details-label mb-1">Name</div>
+                    <h2 class="fw-bold mb-3" th:text="${category.name}">Kategorie</h2>
+                    <p class="text-muted mb-0" th:text="${category.description ?: 'Keine Beschreibung vorhanden.'}">Beschreibung</p>
+                </div>
 
-<p>
-    <a th:href="@{/categories/{id}/edit(id=${category.id})}">Bearbeiten</a>
-    |
-    <a th:href="@{/categories/{id}/delete(id=${category.id})}">Löschen</a>
-    |
-    <a th:href="@{/categories}">Zurück zur Liste</a>
-</p>
+                <div class="col-12 col-lg-4">
+                    <div class="bg-light rounded-4 p-3 h-100">
+                        <div class="details-label mb-1">ID</div>
+                        <div class="details-value" th:text="${category.id}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-primary" th:href="@{/categories/{id}/edit(id=${category.id})}">Bearbeiten</a>
+                <a class="btn btn-danger" th:href="@{/categories/{id}/delete(id=${category.id})}">Löschen</a>
+                <a class="btn btn-outline-secondary" th:href="@{/categories}">Zurück zur Liste</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

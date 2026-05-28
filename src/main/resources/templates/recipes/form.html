@@ -1,65 +1,83 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen'">Rezept</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead(${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader(${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen')}"></div>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader(${isEdit} ? 'Rezept bearbeiten' : 'Rezept anlegen')}"></div>
 
-<form th:object="${recipe}"
-      th:action="${isEdit} ? @{/recipes/{id}/edit(id=${recipe.id})} : @{/recipes/new}"
-      method="post">
+    <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+            <form th:object="${recipe}"
+                  th:action="${isEdit} ? @{/recipes/{id}/edit(id=${recipe.id})} : @{/recipes/new}"
+                  method="post">
 
-    <div>
-        <label for="title">Titel *</label><br>
-        <input type="text" id="title" th:field="*{title}">
-        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
+                <div class="row g-4">
+                    <div class="col-12 col-lg-8">
+                        <label for="title" class="form-label fw-semibold">Titel *</label>
+                        <input type="text"
+                               id="title"
+                               class="form-control"
+                               th:classappend="${#fields.hasErrors('title')} ? ' is-invalid' : ''"
+                               th:field="*{title}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label fw-semibold">Beschreibung</label>
+                        <textarea id="description" class="form-control" th:field="*{description}" rows="5"></textarea>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label for="sourceUrl" class="form-label fw-semibold">Quell-URL</label>
+                        <input type="url" id="sourceUrl" class="form-control" th:field="*{sourceUrl}">
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label for="cookTimeMinutes" class="form-label fw-semibold">Kochzeit (Minuten)</label>
+                        <input type="number" id="cookTimeMinutes" class="form-control" th:field="*{cookTimeMinutes}" min="0">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="notes" class="form-label fw-semibold">Notizen</label>
+                        <textarea id="notes" class="form-control" th:field="*{notes}" rows="4"></textarea>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label for="rating" class="form-label fw-semibold">Bewertung (1-5)</label>
+                        <input type="number"
+                               id="rating"
+                               class="form-control"
+                               th:classappend="${#fields.hasErrors('rating')} ? ' is-invalid' : ''"
+                               th:field="*{rating}"
+                               min="1"
+                               max="5">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <label for="category" class="form-label fw-semibold">Kategorie *</label>
+                        <select id="category"
+                                class="form-select"
+                                th:classappend="${#fields.hasErrors('category') or #fields.hasErrors('category.id')} ? ' is-invalid' : ''"
+                                th:field="*{category.id}">
+                            <option value="">Bitte wählen</option>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">Speichern</button>
+                    <a class="btn btn-outline-secondary btn-lg" th:href="${isEdit} ? @{/recipes/{id}(id=${recipe.id})} : @{/recipes}">Abbrechen</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div>
-        <label for="description">Beschreibung</label><br>
-        <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
-    </div>
-
-    <div>
-        <label for="sourceUrl">Quell-URL</label><br>
-        <input type="text" id="sourceUrl" th:field="*{sourceUrl}">
-    </div>
-
-    <div>
-        <label for="notes">Notizen</label><br>
-        <textarea id="notes" th:field="*{notes}" rows="4" cols="50"></textarea>
-    </div>
-
-    <div>
-        <label for="cookTimeMinutes">Kochzeit (Minuten)</label><br>
-        <input type="number" id="cookTimeMinutes" th:field="*{cookTimeMinutes}" min="0">
-    </div>
-
-    <div>
-        <label for="rating">Bewertung (1-5)</label><br>
-        <input type="number" id="rating" th:field="*{rating}" min="1" max="5">
-        <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" style="color: red;"></p>
-    </div>
-
-    <div>
-        <label for="category">Kategorie *</label><br>
-        <select id="category" th:field="*{category.id}">
-            <option value="">Bitte wählen</option>
-            <option th:each="category : ${categories}"
-                    th:value="${category.id}"
-                    th:text="${category.name}"></option>
-        </select>
-        <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red;"></p>
-        <p th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}" style="color: red;"></p>
-    </div>
-
-    <div style="margin-top: 12px;">
-        <button type="submit">Speichern</button>
-        <a th:href="${isEdit} ? @{/recipes/{id}(id=${recipe.id})} : @{/recipes}">Abbrechen</a>
-    </div>
-</form>
+</div>
 </body>
 </html>
 

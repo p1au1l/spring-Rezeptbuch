@@ -28,3 +28,7 @@ Es gibt mindestens zwei Tabellen (normalisiert):
 - H2 Console auf `http://localhost:8080/h2-console/`
 - Persistenz auf Festplatte
 - 2 Entities mit vollständigem CRUD
+
+
+
+.\mvnw.cmd spring-boot:run

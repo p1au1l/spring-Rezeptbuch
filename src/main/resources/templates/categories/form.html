@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${isEdit} ? 'Kategorie bearbeiten' : 'Kategorie anlegen'">Kategorie</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead(${isEdit} ? 'Kategorie bearbeiten' : 'Kategorie anlegen')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader(${isEdit} ? 'Kategorie bearbeiten' : 'Kategorie anlegen')}"></div>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader(${isEdit} ? 'Kategorie bearbeiten' : 'Kategorie anlegen')}"></div>
 
-<form th:object="${category}"
-      th:action="${isEdit} ? @{/categories/{id}/edit(id=${category.id})} : @{/categories/new}"
-      method="post">
+    <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+            <form th:object="${category}"
+                  th:action="${isEdit} ? @{/categories/{id}/edit(id=${category.id})} : @{/categories/new}"
+                  method="post">
 
-    <div>
-        <label for="name">Name *</label><br>
-        <input type="text" id="name" th:field="*{name}">
-        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></p>
+                <div class="row g-4">
+                    <div class="col-12 col-lg-8">
+                        <label for="name" class="form-label fw-semibold">Name *</label>
+                        <input type="text"
+                               id="name"
+                               class="form-control"
+                               th:classappend="${#fields.hasErrors('name')} ? ' is-invalid' : ''"
+                               th:field="*{name}">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="description" class="form-label fw-semibold">Beschreibung</label>
+                        <textarea id="description" class="form-control" th:field="*{description}" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">Speichern</button>
+                    <a class="btn btn-outline-secondary btn-lg" th:href="${isEdit} ? @{/categories/{id}(id=${category.id})} : @{/categories}">Abbrechen</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div>
-        <label for="description">Beschreibung</label><br>
-        <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
-    </div>
-
-
-    <div style="margin-top: 12px;">
-        <button type="submit">Speichern</button>
-        <a th:href="${isEdit} ? @{/categories/{id}(id=${category.id})} : @{/categories}">Abbrechen</a>
-    </div>
-</form>
+</div>
 </body>
 </html>
 

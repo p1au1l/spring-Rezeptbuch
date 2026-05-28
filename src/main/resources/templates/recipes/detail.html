@@ -1,29 +1,62 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Rezept-Details</title>
-</head>
+<head th:replace="~{fragments/layout :: pageHead('Rezept-Details')}"></head>
 <body>
-<div th:replace="~{fragments/layout :: siteHeader('Rezept-Details')}"></div>
-<div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
+<div class="container py-4 py-lg-5">
+    <div th:replace="~{fragments/layout :: siteHeader('Rezept-Details')}"></div>
+    <div th:replace="~{fragments/layout :: flashMessages(${successMessage}, ${errorMessage})}"></div>
 
-<p><strong>ID:</strong> <span th:text="${recipe.id}"></span></p>
-<p><strong>Titel:</strong> <span th:text="${recipe.title}"></span></p>
-<p><strong>Beschreibung:</strong> <span th:text="${recipe.description}"></span></p>
-<p><strong>Quell-URL:</strong> <span th:text="${recipe.sourceUrl}"></span></p>
-<p><strong>Notizen:</strong> <span th:text="${recipe.notes}"></span></p>
-<p><strong>Kochzeit:</strong> <span th:text="${recipe.cookTimeMinutes}"></span> Minuten</p>
-<p><strong>Bewertung:</strong> <span th:text="${recipe.rating}"></span></p>
-<p><strong>Kategorie:</strong> <span th:text="${recipe.category.name}"></span></p>
+    <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+            <div class="row g-4">
+                <div class="col-12 col-lg-8">
+                    <div class="details-label mb-1">Titel</div>
+                    <h2 class="fw-bold mb-3" th:text="${recipe.title}">Rezepttitel</h2>
+                    <p class="text-muted mb-0" th:text="${recipe.description ?: 'Keine Beschreibung vorhanden.'}">Beschreibung</p>
+                </div>
 
-<p>
-    <a th:href="@{/recipes/{id}/edit(id=${recipe.id})}">Bearbeiten</a>
-    |
-    <a th:href="@{/recipes/{id}/delete(id=${recipe.id})}">Löschen</a>
-    |
-    <a th:href="@{/recipes}">Zurück zur Liste</a>
-</p>
+                <div class="col-12 col-lg-4">
+                    <div class="bg-light rounded-4 p-3 h-100">
+                        <div class="details-label mb-1">Kategorie</div>
+                        <div class="details-value mb-3" th:text="${recipe.category != null ? recipe.category.name : '-'}">Kategorie</div>
+
+                        <div class="details-label mb-1">Bewertung</div>
+                        <div class="details-value mb-3" th:text="${recipe.rating != null ? recipe.rating + '/5' : '—'}">0/5</div>
+
+                        <div class="details-label mb-1">Kochzeit</div>
+                        <div class="details-value" th:text="${recipe.cookTimeMinutes} + ' Minuten'">0 Minuten</div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="details-label">ID</div>
+                            <div class="details-value" th:text="${recipe.id}"></div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="details-label">Quell-URL</div>
+                            <div class="details-value">
+                                <a th:if="${recipe.sourceUrl}" th:href="${recipe.sourceUrl}" target="_blank" rel="noopener" th:text="${recipe.sourceUrl}"></a>
+                                <span th:unless="${recipe.sourceUrl}">Keine Quelle angegeben</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="details-label">Notizen</div>
+                            <div class="details-value" th:text="${recipe.notes ?: 'Keine Notizen vorhanden.'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-primary" th:href="@{/recipes/{id}/edit(id=${recipe.id})}">Bearbeiten</a>
+                <a class="btn btn-danger" th:href="@{/recipes/{id}/delete(id=${recipe.id})}">Löschen</a>
+                <a class="btn btn-outline-secondary" th:href="@{/recipes}">Zurück zur Liste</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

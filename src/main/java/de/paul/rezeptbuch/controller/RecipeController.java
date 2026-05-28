@@ -75,7 +75,14 @@ public class RecipeController {
      * @return Template-Name
      */
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(Model model, RedirectAttributes redirectAttributes) {
+        List<Category> categories = categoryService.getAllCategories();
+        if (categories == null || categories.isEmpty()) {
+            // Keine Kategorien vorhanden -> nicht in das Formular, sondern Hinweis und Redirect
+            redirectAttributes.addFlashAttribute("errorMessage", "Bitte legen Sie zuerst eine Kategorie an, bevor Sie ein Rezept erstellen.");
+            return "redirect:/categories";
+        }
+
         Recipe recipe = new Recipe();
         recipe.setCategory(new Category());
         model.addAttribute("recipe", recipe);
